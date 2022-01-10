@@ -11,14 +11,37 @@
     <title>Accident</title>
 </head>
 <body>
-Hello : Accident
+<%--Hello : Accident--%>
 <div class="card-body">
     <table class="table table-bordered" id="table_string">
         <tbody>
+        <tr>
+            <th>
+                #id
+            </th>
+            <td>
+                Name
+            </td>
+            <td>
+                Description
+            </td>
+            <td>
+                Address
+            </td>
+        </tr>
         <c:forEach items="${list}" var="str">
             <tr>
+                <th>
+                    <c:out value="${str.id}"/>
+                </th>
                 <td>
-                    <c:out value="${str}"/>
+                    <c:out value="${str.name}"/>
+                </td>
+                <td>
+                    <c:out value="${str.text}"/>
+                </td>
+                <td>
+                    <c:out value="${str.address}"/>
                 </td>
             </tr>
         </c:forEach>
