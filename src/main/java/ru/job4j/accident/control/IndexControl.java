@@ -5,13 +5,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.job4j.accident.repository.AccidentMem;
 
-import java.util.List;
-
 @Controller
 public class IndexControl {
+
+    private final AccidentMem accidents;
+
+    public IndexControl(AccidentMem accidents) {
+        this.accidents = accidents;
+    }
+
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("list", new AccidentMem().getAccidents().values());
+        model.addAttribute("list", accidents.getAccidents());
         return "index";
     }
 }
