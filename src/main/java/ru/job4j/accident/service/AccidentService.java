@@ -18,4 +18,12 @@ public class AccidentService {
     public Collection<Accident> getAccidents() {
         return accidents.getAccidents();
     }
+
+    public Accident findById(int id) {
+        return accidents.findById(id);
+    }
+
+    public void create(Accident accident) {
+        accidents.create(accident);
+    }
 }

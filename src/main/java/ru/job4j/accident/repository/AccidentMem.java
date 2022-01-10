@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class AccidentMem {
@@ -21,9 +22,14 @@ public class AccidentMem {
         return accidents.values();
     }
 
-    public static void main(String[] args) {
+    public void create(Accident accident) {
+        if (accident.getId() == 0) {
+          accident.setId(accidents.size() + 1);
+        }
+        accidents.put(accident.getId(), accident);
     }
 
-    public void create(Accident accident) {
+    public Accident findById(int id) {
+        return accidents.get(id);
     }
 }
