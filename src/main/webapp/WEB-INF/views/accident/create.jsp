@@ -34,6 +34,16 @@
                     </select>
                 </td>
             </tr>
+            <tr>
+                <td>Статьи:</td>
+                <td>
+                    <select class="form-control" name="rIds" multiple>
+                        <c:forEach var="rule" items="${rules}" >
+                            <option value="${rule.id}">${rule.name}</option>
+                        </c:forEach>
+                    </select>
+                </td>
+            </tr>
         </table>
         <br/>
         <div>
