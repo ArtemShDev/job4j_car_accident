@@ -51,4 +51,8 @@ public class AccidentMem {
     public Accident findById(int id) {
         return accidents.get(id);
     }
+
+    public Rule findRuleById(int id) {
+        return rules.get(id);
+    }
 }

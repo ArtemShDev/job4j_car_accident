@@ -7,6 +7,9 @@ import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.AccidentMem;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class AccidentService {
@@ -33,7 +36,12 @@ public class AccidentService {
         return accidents.findById(id);
     }
 
-    public void create(Accident accident) {
+    public void create(Accident accident, String[] ids) {
+        Set<Rule> rules = new HashSet<>();
+        for (String id : ids) {
+            rules.add(accidents.findRuleById(Integer.parseInt(id)));
+        }
+        accident.setRules(rules);
         accidents.create(accident);
     }
 }
