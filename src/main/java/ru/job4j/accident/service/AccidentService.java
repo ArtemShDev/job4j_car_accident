@@ -15,16 +15,17 @@ import java.util.Set;
 @Service
 public class AccidentService {
 
-//    private final AccidentJdbcTemplate accidents;
-    private final AccidentHibernate accidents;
-
-    public AccidentService(AccidentHibernate accidents) {
-        this.accidents = accidents;
-    }
-
-//    public AccidentService(AccidentJdbcTemplate accidents) {
+//    private final AccidentHibernate accidents;
+//
+//    public AccidentService(AccidentHibernate accidents) {
 //        this.accidents = accidents;
 //    }
+
+    private final AccidentJdbcTemplate accidents;
+
+    public AccidentService(AccidentJdbcTemplate accidents) {
+        this.accidents = accidents;
+    }
 
     public Collection<Accident> getAccidents() {
         return accidents.getAccidents();
@@ -42,15 +43,7 @@ public class AccidentService {
         return accidents.findById(id);
     }
 
-    @Transactional
     public void create(Accident accident, String[] ids) {
-        Set<Rule> rules = new HashSet<>();
-        if (ids != null) {
-            for (String id : ids) {
-                rules.add(accidents.findRuleById(Integer.parseInt(id)));
-            }
-            accident.setRules(rules);
-        }
-        accidents.save(accident);
+        accidents.save(accident, ids);
     }
 }

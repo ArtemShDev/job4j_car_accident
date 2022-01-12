@@ -9,7 +9,7 @@ import ru.job4j.accident.model.Rule;
 import java.util.Collection;
 import java.util.List;
 
-@Repository
+//@Repository
 public class AccidentHibernate {
     private final SessionFactory sf;
 
@@ -41,9 +41,13 @@ public class AccidentHibernate {
         }
     }
 
-    public Accident save(Accident accident) {
+    public Accident save(Accident accident, String[] ids) {
         try (Session session = sf.openSession()) {
+            session.beginTransaction();
             if (accident.getId() == 0) {
+                for (String id : ids) {
+                    accident.addRule(session.get(Rule.class, Integer.parseInt(id)));
+                }
                 session.save(accident);
             } else {
                 Accident accidentDB = session.get(Accident.class, accident.getId());
@@ -52,30 +56,10 @@ public class AccidentHibernate {
                 accidentDB.setAddress(accident.getAddress());
                 session.saveOrUpdate(accidentDB);
             }
+            session.getTransaction().commit();
         }
         return accident;
     }
-
-    //        if (accident.getId() == 0) {
-//            KeyHolder keyHolder = new GeneratedKeyHolder();
-//            String textSQL = "insert into accidents (name, text, address, type_id) values (?, ?, ?, ?)";
-//            jdbc.update(connection -> {
-//                PreparedStatement ps = connection.prepareStatement(textSQL, new String[]{"id"});
-//                ps.setString(1, accident.getName());
-//                ps.setString(2, accident.getText());
-//                ps.setString(3, accident.getAddress());
-//                ps.setInt(4, accident.getType().getId());
-//                return ps;
-//            }, keyHolder);
-//            accident.setId((int) keyHolder.getKey());
-//            for (Rule rule : accident.getRules()) {
-//                jdbc.update("insert into accident_rule (type_id, accident_id) values (?, ?)",
-//                        rule.getId(), keyHolder.getKey());
-//            }
-//        } else {
-//            jdbc.update("update accidents set name = ?, text = ?, address = ? where id = ?",
-//                    accident.getName(), accident.getText(), accident.getAddress(), accident.getId());
-//        }
 
     public Accident findById(int id) {
         try (Session session = sf.openSession()) {

@@ -17,9 +17,9 @@ CREATE TABLE if not exists rules (
 );
 
 CREATE TABLE if not exists accident_rule (
-    type_id int NOT NULL REFERENCES types(id),
+    rule_id int NOT NULL REFERENCES rules(id),
     accident_id int NOT NULL REFERENCES accidents(id),
-    constraint ar_pkey primary key (type_id, accident_id)
+    constraint ar_pkey primary key (rule_id, accident_id)
 );
 
 insert into types (name) values ('Две машины');
@@ -32,11 +32,11 @@ insert into accidents (name, text, address, type_id) values ('Accident 1', 'Desc
 insert into accidents (name, text, address, type_id) values ('Accident 2', 'Description Accident 2', 'SPB', 2);
 insert into accidents (name, text, address, type_id) values ('Accident 3', 'Description Accident 3', 'Tomsk', 3);
 
-insert into accident_rule (type_id, accident_id) values (1, 1);
-insert into accident_rule (type_id, accident_id) values (2, 1);
-insert into accident_rule (type_id, accident_id) values (3, 2);
-insert into accident_rule (type_id, accident_id) values (2, 3);
-insert into accident_rule (type_id, accident_id) values (1, 3);
+insert into accident_rule (rule_id, accident_id) values (1, 1);
+insert into accident_rule (rule_id, accident_id) values (2, 1);
+insert into accident_rule (rule_id, accident_id) values (3, 2);
+insert into accident_rule (rule_id, accident_id) values (2, 3);
+insert into accident_rule (rule_id, accident_id) values (1, 3);
 
 select * from types;
 select * from rules;

@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.util.Collection;
 import java.util.List;
 
-//@Repository
+@Repository
 public class AccidentJdbcTemplate {
 
     private final JdbcTemplate jdbc;
@@ -52,7 +52,7 @@ public class AccidentJdbcTemplate {
                 });
     }
 
-    public Accident save(Accident accident) {
+    public Accident save(Accident accident, String[] ids) {
         if (accident.getId() == 0) {
             KeyHolder keyHolder = new GeneratedKeyHolder();
             String textSQL = "insert into accidents (name, text, address, type_id) values (?, ?, ?, ?)";
@@ -65,9 +65,12 @@ public class AccidentJdbcTemplate {
                 return ps;
             }, keyHolder);
             accident.setId((int) keyHolder.getKey());
-            for (Rule rule : accident.getRules()) {
-                jdbc.update("insert into accident_rule (type_id, accident_id) values (?, ?)",
-                        rule.getId(), keyHolder.getKey());
+            if (ids != null) {
+                for (String id : ids) {
+                    jdbc.update("insert into accident_rule (rule_id, accident_id) values (?, ?)",
+                            Integer.parseInt(id), keyHolder.getKey());
+                    accident.addRule(findRuleById(Integer.parseInt(id)));
+                }
             }
         } else {
             jdbc.update("update accidents set name = ?, text = ?, address = ? where id = ?",

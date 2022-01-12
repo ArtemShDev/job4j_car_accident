@@ -2,6 +2,7 @@ package ru.job4j.accident.model;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ public class Accident {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinColumn(name = "type_id")
     private AccidentType type;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "accidents_rules",
             joinColumns = {@JoinColumn(name = "accident_id", nullable = false, updatable = false,
                     referencedColumnName = "id")},
@@ -41,6 +42,13 @@ public class Accident {
         this.text = text;
         this.address = address;
         this.type = type;
+    }
+
+    public void addRule(Rule rule) {
+        if (rules == null) {
+            rules = new HashSet<>();
+        }
+        rules.add(rule);
     }
 
     public Set<Rule> getRules() {
