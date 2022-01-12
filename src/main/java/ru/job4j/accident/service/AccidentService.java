@@ -4,7 +4,10 @@ import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
+import ru.job4j.accident.repository.AccidentHibernate;
 import ru.job4j.accident.repository.AccidentJdbcTemplate;
+
+import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,11 +15,16 @@ import java.util.Set;
 @Service
 public class AccidentService {
 
-private final AccidentJdbcTemplate accidents;
+//    private final AccidentJdbcTemplate accidents;
+    private final AccidentHibernate accidents;
 
-    public AccidentService(AccidentJdbcTemplate accidents) {
+    public AccidentService(AccidentHibernate accidents) {
         this.accidents = accidents;
     }
+
+//    public AccidentService(AccidentJdbcTemplate accidents) {
+//        this.accidents = accidents;
+//    }
 
     public Collection<Accident> getAccidents() {
         return accidents.getAccidents();
@@ -34,6 +42,7 @@ private final AccidentJdbcTemplate accidents;
         return accidents.findById(id);
     }
 
+    @Transactional
     public void create(Accident accident, String[] ids) {
         Set<Rule> rules = new HashSet<>();
         if (ids != null) {
