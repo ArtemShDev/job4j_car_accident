@@ -4,19 +4,17 @@ import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.AccidentMem;
-
+import ru.job4j.accident.repository.AccidentJdbcTemplate;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
 public class AccidentService {
 
-    private final AccidentMem accidents;
+private final AccidentJdbcTemplate accidents;
 
-    public AccidentService(AccidentMem accidents) {
+    public AccidentService(AccidentJdbcTemplate accidents) {
         this.accidents = accidents;
     }
 
@@ -38,10 +36,12 @@ public class AccidentService {
 
     public void create(Accident accident, String[] ids) {
         Set<Rule> rules = new HashSet<>();
-        for (String id : ids) {
-            rules.add(accidents.findRuleById(Integer.parseInt(id)));
+        if (ids != null) {
+            for (String id : ids) {
+                rules.add(accidents.findRuleById(Integer.parseInt(id)));
+            }
+            accident.setRules(rules);
         }
-        accident.setRules(rules);
-        accidents.create(accident);
+        accidents.save(accident);
     }
 }

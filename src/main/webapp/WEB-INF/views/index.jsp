@@ -7,10 +7,13 @@
     <title>Accident</title>
 </head>
 <body>
-<div class="container">
-    <a href="<c:url value='/create'/>">Добавить инцидент</a>
-</div>
+<%--<div class="container" margin-left="100px">--%>
+<%--    <a href="<c:url value='/create'/>">Добавить инцидент</a>--%>
+<%--</div>--%>
 <div class="card-body">
+    <a href="/accident/create">Добавить инцидент</a>
+    <br/>
+    <br/>
     <table class="table table-bordered" id="table_string">
         <tbody>
         <tr>
