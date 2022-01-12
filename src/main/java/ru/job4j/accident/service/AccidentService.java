@@ -14,12 +14,13 @@ import java.util.Set;
 
 @Service
 public class AccidentService {
+    /*
+    private final AccidentHibernate accidents;
 
-//    private final AccidentHibernate accidents;
-//
-//    public AccidentService(AccidentHibernate accidents) {
-//        this.accidents = accidents;
-//    }
+    public AccidentService(AccidentHibernate accidents) {
+        this.accidents = accidents;
+    }
+     */
 
     private final AccidentJdbcTemplate accidents;
 
