@@ -15,7 +15,7 @@ public class Accident {
     private String name;
     private String text;
     private String address;
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "type_id")
     private AccidentType type;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
