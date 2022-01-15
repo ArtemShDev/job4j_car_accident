@@ -20,8 +20,9 @@ public class WebInit implements WebApplicationInitializer {
         /*
         ac.register(WebConfig.class, JdbcConfig.class);
         ac.register(WebConfig.class, HbmConfig.class);
-         */
         ac.register(WebConfig.class, DataConfig.class);
+         */
+        ac.register(WebConfig.class, DataConfig.class, SecurityConfig.class);
         ac.refresh();
         CharacterEncodingFilter filter = new CharacterEncodingFilter();
         filter.setEncoding("UTF-8");
