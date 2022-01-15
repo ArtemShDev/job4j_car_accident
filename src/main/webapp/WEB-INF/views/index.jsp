@@ -10,6 +10,9 @@
 <%--<div class="container" margin-left="100px">--%>
 <%--    <a href="<c:url value='/create'/>">Добавить инцидент</a>--%>
 <%--</div>--%>
+<div>
+    Login as : ${user.username}
+</div>
 <div class="card-body">
     <a href="/accident/create">Добавить инцидент</a>
     <br/>
